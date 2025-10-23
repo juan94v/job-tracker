@@ -23,7 +23,7 @@
 
   <div>
     <%= form.label :status, style: "display: block" %>
-    <%= form.select :status, InterviewStage.statuses.keys, {}, { class: "form-select" } %>
+    <%= form.select :status, InterviewStage.statuses.keys.map { |s| [s.titleize, s] }, {}, { class: "form-select" } %>
   </div>
 
   <div>
