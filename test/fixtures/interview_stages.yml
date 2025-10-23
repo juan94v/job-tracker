@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  job_application: one
+  name: MyString
+  order: 1
+  status: MyString
+  scheduled_date: 2025-10-22 21:14:16
+  completed_date: 2025-10-22 21:14:16
+  follow_up_date: 2025-10-22
+  feedback: MyText
+
+two:
+  job_application: two
+  name: MyString
+  order: 1
+  status: MyString
+  scheduled_date: 2025-10-22 21:14:16
+  completed_date: 2025-10-22 21:14:16
+  follow_up_date: 2025-10-22
+  feedback: MyText
