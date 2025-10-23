@@ -25,7 +25,7 @@ class InterviewStagesTest < ApplicationSystemTestCase
     click_on "Create Interview stage"
 
     assert_text "Interview stage was successfully created"
-    click_on "Back"
+    click_on "Back to interview stages"
   end
 
   test "should update Interview stage" do
@@ -42,7 +42,7 @@ class InterviewStagesTest < ApplicationSystemTestCase
     click_on "Update Interview stage"
 
     assert_text "Interview stage was successfully updated"
-    click_on "Back"
+    click_on "Back to interview stages"
   end
 
   test "should destroy Interview stage" do
