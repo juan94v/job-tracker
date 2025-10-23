@@ -26,7 +26,7 @@ class JobApplicationsTest < ApplicationSystemTestCase
     fill_in "Position", with: @job_application.position
     fill_in "Salary range", with: @job_application.salary_range
     fill_in "Skill focus", with: @job_application.skill_focus
-    fill_in "Status", with: @job_application.status
+    select @job_application.status.titleize, from: "Status"
     click_on "Create Job application"
 
     assert_text "Job application was successfully created"
@@ -49,7 +49,7 @@ class JobApplicationsTest < ApplicationSystemTestCase
     fill_in "Position", with: @job_application.position
     fill_in "Salary range", with: @job_application.salary_range
     fill_in "Skill focus", with: @job_application.skill_focus
-    fill_in "Status", with: @job_application.status
+    select @job_application.status.titleize, from: "Status"
     click_on "Update Job application"
 
     assert_text "Job application was successfully updated"
