@@ -30,7 +30,7 @@ class InterviewStagesController < ApplicationController
     respond_to do |format|
       if @interview_stage.save
         format.html { redirect_to job_application_interview_stage_path(@job_application, @interview_stage), notice: "Interview stage was successfully created." }
-        format.json { render :show, status: :created, location: [@job_application, @interview_stage] }
+        format.json { render :show, status: :created, location: [ @job_application, @interview_stage ] }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @interview_stage.errors, status: :unprocessable_entity }
@@ -43,7 +43,7 @@ class InterviewStagesController < ApplicationController
     respond_to do |format|
       if @interview_stage.update(interview_stage_params)
         format.html { redirect_to job_application_interview_stage_path(@job_application, @interview_stage), notice: "Interview stage was successfully updated.", status: :see_other }
-        format.json { render :show, status: :ok, location: [@job_application, @interview_stage] }
+        format.json { render :show, status: :ok, location: [ @job_application, @interview_stage ] }
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @interview_stage.errors, status: :unprocessable_entity }
