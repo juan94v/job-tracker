@@ -1,0 +1,17 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Interview stages for #{@job_application.company} - #{@job_application.position}" %>
+
+<h1>Interview stages for <%= @job_application.company %> - <%= @job_application.position %></h1>
+
+<div id="interview_stages">
+  <% @interview_stages.each do |interview_stage| %>
+    <%= render interview_stage %>
+    <p>
+      <%= link_to "Show this interview stage", job_application_interview_stage_path(@job_application, interview_stage) %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New interview stage", new_job_application_interview_stage_path(@job_application) %> |
+<%= link_to "Back to job application", job_application_path(@job_application) %>
