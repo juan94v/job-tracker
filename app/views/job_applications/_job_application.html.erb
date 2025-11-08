@@ -61,8 +61,10 @@
     </p>
   <% end %>
 
-  <div class="actions">
-    <%= link_to "View Details", job_application, class: "btn btn-primary" %>
-    <%= link_to "Edit", edit_job_application_path(job_application), class: "btn btn-secondary" %>
-  </div>
+  <% unless local_assigns[:show_edit_button] == false %>
+    <div class="actions">
+      <%= link_to "View Details", job_application, class: "btn btn-primary" %>
+      <%= link_to "Edit", edit_job_application_path(job_application, return_to: 'index'), class: "btn btn-secondary" %>
+    </div>
+  <% end %>
 </div>

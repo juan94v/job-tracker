@@ -1,12 +1,18 @@
 <% content_for :title, "Editing interview stage" %>
 
-<h1>Editing interview stage</h1>
+<div class="container">
+  <div class="page-header">
+    <h1>Editar Etapa de Entrevista</h1>
+  </div>
 
-<%= render "form", interview_stage: @interview_stage, job_application: @job_application %>
+  <div class="job-context-banner">
+    <p><strong><%= @job_application.company %></strong> - <%= @job_application.position %></p>
+  </div>
 
-<br>
+  <%= render "form", interview_stage: @interview_stage, job_application: @job_application %>
 
-<div>
-  <%= link_to "Show this interview stage", job_application_interview_stage_path(@job_application, @interview_stage) %> |
-  <%= link_to "Back to interview stages", job_application_interview_stages_path(@job_application) %>
+  <div style="margin-top: 20px;">
+    <%= link_to "Ver detalles", job_application_interview_stage_path(@job_application, @interview_stage), class: "btn btn-primary" %>
+    <%= link_to "← Volver a la aplicación", job_application_path(@job_application), class: "btn btn-secondary" %>
+  </div>
 </div>

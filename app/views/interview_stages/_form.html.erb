@@ -1,9 +1,8 @@
-<%= form_with(model: [@job_application, interview_stage]) do |form| %>
+<%= form_with(model: [@job_application, interview_stage], class: "job-application-form") do |form| %>
   <% if interview_stage.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(interview_stage.errors.count, "error") %> prohibited this interview_stage from being saved:</h2>
-
-      <ul>
+    <div class="alert">
+      <h3 style="margin-bottom: 10px;"><%= pluralize(interview_stage.errors.count, "error") %> impidieron guardar esta etapa:</h3>
+      <ul style="margin-left: 20px;">
         <% interview_stage.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
@@ -11,42 +10,58 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+  <div class="card">
+    <h2 style="margin-bottom: 20px; border-bottom: 2px solid #3498db; padding-bottom: 10px;">Información Básica</h2>
+
+    <div class="form-row">
+      <div class="form-group">
+        <%= form.label :name, "Nombre de la etapa *" %>
+        <%= form.text_field :name, placeholder: "ej., Entrevista técnica, Primera ronda, Final...", required: true %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :order, "Orden" %>
+        <%= form.number_field :order, placeholder: "ej., 1, 2, 3..." %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :status, "Estado" %>
+      <%= form.select :status, InterviewStage.statuses.keys.map { |s| [s.titleize, s] }, { prompt: "Seleccionar estado" }, { class: "form-select" } %>
+    </div>
   </div>
 
-  <div>
-    <%= form.label :order, style: "display: block" %>
-    <%= form.number_field :order %>
+  <div class="card">
+    <h2 style="margin-bottom: 20px; border-bottom: 2px solid #3498db; padding-bottom: 10px;">Fechas</h2>
+
+    <div class="form-row">
+      <div class="form-group">
+        <%= form.label :scheduled_date, "Fecha programada" %>
+        <%= form.datetime_field :scheduled_date %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :completed_date, "Fecha completada" %>
+        <%= form.datetime_field :completed_date %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :follow_up_date, "Fecha de seguimiento" %>
+      <%= form.date_field :follow_up_date %>
+    </div>
   </div>
 
-  <div>
-    <%= form.label :status, style: "display: block" %>
-    <%= form.select :status, InterviewStage.statuses.keys.map { |s| [s.titleize, s] }, {}, { class: "form-select" } %>
+  <div class="card">
+    <h2 style="margin-bottom: 20px; border-bottom: 2px solid #3498db; padding-bottom: 10px;">Notas y Feedback</h2>
+
+    <div class="form-group">
+      <%= form.label :feedback, "Feedback" %>
+      <%= form.text_area :feedback, rows: 5, placeholder: "Notas sobre cómo fue la entrevista, preguntas realizadas, impresiones..." %>
+    </div>
   </div>
 
-  <div>
-    <%= form.label :scheduled_date, style: "display: block" %>
-    <%= form.datetime_field :scheduled_date %>
-  </div>
-
-  <div>
-    <%= form.label :completed_date, style: "display: block" %>
-    <%= form.datetime_field :completed_date %>
-  </div>
-
-  <div>
-    <%= form.label :follow_up_date, style: "display: block" %>
-    <%= form.date_field :follow_up_date %>
-  </div>
-
-  <div>
-    <%= form.label :feedback, style: "display: block" %>
-    <%= form.text_area :feedback %>
-  </div>
-
-  <div>
-    <%= form.submit %>
+  <div class="form-actions">
+    <%= form.submit interview_stage.new_record? ? "Crear Etapa" : "Actualizar Etapa", class: "btn btn-primary" %>
   </div>
 <% end %>

@@ -38,7 +38,14 @@ class JobApplicationsController < ApplicationController
   def update
     respond_to do |format|
       if @job_application.update(job_application_params)
-        format.html { redirect_to @job_application, notice: "Job application was successfully updated.", status: :see_other }
+        # Determine where to redirect based on return_to parameter
+        if params[:return_to] == 'show'
+          redirect_path = job_application_path(@job_application)
+        else
+          redirect_path = job_applications_path
+        end
+
+        format.html { redirect_to redirect_path, notice: "Job application was successfully updated.", status: :see_other }
         format.json { render :show, status: :ok, location: @job_application }
       else
         format.html { render :edit, status: :unprocessable_entity }
