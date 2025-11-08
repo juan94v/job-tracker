@@ -1,4 +1,6 @@
 <%= form_with(model: job_application, class: "job-application-form") do |form| %>
+  <%= hidden_field_tag :return_to, params[:return_to] %>
+
   <% if job_application.errors.any? %>
     <div class="alert">
       <h3 style="margin-bottom: 10px;"><%= pluralize(job_application.errors.count, "error") %> prohibited this job application from being saved:</h3>

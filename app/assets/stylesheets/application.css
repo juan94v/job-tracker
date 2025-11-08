@@ -350,6 +350,57 @@ textarea::placeholder {
   color: #95a5a6;
 }
 
+/* Interview Stages Specific Styles */
+.job-context-banner {
+  background: white;
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  border-left: 4px solid #3498db;
+}
+
+.job-context-banner p {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #2c3e50;
+}
+
+.interview-stage {
+  /* Inherits from .card and .job-application styles */
+}
+
+/* Additional status badges for interview stages */
+.status-scheduled,
+.status-programada {
+  background-color: #fff3e0;
+  color: #f57c00;
+}
+
+.status-completed,
+.status-completada {
+  background-color: #e8f5e9;
+  color: #388e3c;
+}
+
+.status-pending,
+.status-pendiente {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.status-cancelled,
+.status-cancelada {
+  background-color: #ffebee;
+  color: #d32f2f;
+}
+
+.status-in-progress,
+.status-en-progreso {
+  background-color: #fff9c4;
+  color: #f9a825;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .card-grid {

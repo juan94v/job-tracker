@@ -1,42 +1,47 @@
-<div id="<%= dom_id interview_stage %>">
-  <p>
-    <strong>Job application:</strong>
-    <%= interview_stage.job_application_id %>
-  </p>
+<div id="<%= dom_id interview_stage %>" class="card interview-stage">
+  <div class="job-application-header">
+    <h3><%= interview_stage.name %></h3>
+    <p class="company">Etapa <%= interview_stage.order %></p>
+  </div>
 
-  <p>
-    <strong>Name:</strong>
-    <%= interview_stage.name %>
-  </p>
+  <% if interview_stage.status.present? %>
+    <p>
+      <strong>Status:</strong>
+      <span class="status-badge status-<%= interview_stage.status.downcase.gsub(' ', '-') %>">
+        <%= interview_stage.status %>
+      </span>
+    </p>
+  <% end %>
 
-  <p>
-    <strong>Order:</strong>
-    <%= interview_stage.order %>
-  </p>
+  <% if interview_stage.scheduled_date %>
+    <p>
+      <strong>Fecha programada:</strong>
+      <%= interview_stage.scheduled_date.strftime("%d/%m/%Y") if interview_stage.scheduled_date.respond_to?(:strftime) %>
+    </p>
+  <% end %>
 
-  <p>
-    <strong>Status:</strong>
-    <%= interview_stage.status %>
-  </p>
+  <% if interview_stage.completed_date %>
+    <p>
+      <strong>Fecha completada:</strong>
+      <%= interview_stage.completed_date.strftime("%d/%m/%Y") if interview_stage.completed_date.respond_to?(:strftime) %>
+    </p>
+  <% end %>
 
-  <p>
-    <strong>Scheduled date:</strong>
-    <%= interview_stage.scheduled_date %>
-  </p>
+  <% if interview_stage.follow_up_date %>
+    <p>
+      <strong>Fecha de seguimiento:</strong>
+      <%= interview_stage.follow_up_date.strftime("%d/%m/%Y") if interview_stage.follow_up_date.respond_to?(:strftime) %>
+    </p>
+  <% end %>
 
-  <p>
-    <strong>Completed date:</strong>
-    <%= interview_stage.completed_date %>
-  </p>
+  <% if interview_stage.feedback.present? %>
+    <p>
+      <strong>Feedback:</strong>
+      <%= interview_stage.feedback %>
+    </p>
+  <% end %>
 
-  <p>
-    <strong>Follow up date:</strong>
-    <%= interview_stage.follow_up_date %>
-  </p>
-
-  <p>
-    <strong>Feedback:</strong>
-    <%= interview_stage.feedback %>
-  </p>
-
+  <div class="actions">
+    <%= link_to "View Details", job_application_interview_stage_path(interview_stage.job_application, interview_stage), class: "btn btn-primary" %>
+  </div>
 </div>
