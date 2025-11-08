@@ -1,9 +1,13 @@
 // Filtrado de compañías en tiempo real
-document.addEventListener('turbo:load', function() {
+function initializeCompanyFilter() {
   const filterInput = document.getElementById('company-filter');
 
   if (filterInput) {
-    filterInput.addEventListener('input', function() {
+    // Remover listener anterior si existe para evitar duplicados
+    filterInput.replaceWith(filterInput.cloneNode(true));
+    const newFilterInput = document.getElementById('company-filter');
+
+    newFilterInput.addEventListener('input', function() {
       const searchTerm = this.value.toLowerCase().trim();
       const jobApplications = document.querySelectorAll('.job-application');
 
@@ -23,4 +27,8 @@ document.addEventListener('turbo:load', function() {
       });
     });
   }
-});
+}
+
+// Inicializar en la carga inicial y cuando Turbo recarga la página
+document.addEventListener('turbo:load', initializeCompanyFilter);
+document.addEventListener('DOMContentLoaded', initializeCompanyFilter);
