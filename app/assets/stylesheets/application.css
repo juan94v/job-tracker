@@ -324,6 +324,32 @@ textarea::placeholder {
   margin-bottom: 0;
 }
 
+/* Search Container */
+.search-container {
+  margin-bottom: 30px;
+}
+
+.search-input {
+  width: 100%;
+  max-width: 500px;
+  padding: 14px 20px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.search-input::placeholder {
+  color: #95a5a6;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .card-grid {
@@ -342,5 +368,9 @@ textarea::placeholder {
 
   h1 {
     font-size: 2rem;
+  }
+
+  .search-input {
+    max-width: 100%;
   }
 }
