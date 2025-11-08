@@ -1,0 +1,26 @@
+<% content_for :title, "Job applications" %>
+
+<div class="container">
+  <% if notice %>
+    <p class="notice"><%= notice %></p>
+  <% end %>
+
+  <div class="page-header">
+    <h1>Job Applications</h1>
+    <%= link_to "New job application", new_job_application_path, class: "btn btn-success" %>
+  </div>
+
+  <div id="job_applications" class="card-grid">
+    <% @job_applications.each do |job_application| %>
+      <%= render job_application %>
+    <% end %>
+  </div>
+
+  <% if @job_applications.empty? %>
+    <div class="card" style="text-align: center; padding: 60px 20px;">
+      <h2 style="color: #95a5a6; margin-bottom: 20px;">No job applications yet</h2>
+      <p style="color: #7f8c8d; margin-bottom: 30px;">Start tracking your job applications by creating your first one!</p>
+      <%= link_to "Create your first job application", new_job_application_path, class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

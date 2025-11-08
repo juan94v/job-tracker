@@ -1,31 +1,31 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  company: MyString
-  position: MyString
-  status: MyString
-  location: MyString
-  salary_range: MyString
-  current_salary: 9.99
-  skill_focus: MyText
-  applied_through: MyString
-  general_notes: MyText
-  final_outcome: MyText
-  contact_name: MyString
-  contact_email: MyString
-  contact_role: MyString
+  company: Google
+  position: Senior Software Engineer
+  status: applied
+  location: San Francisco, CA
+  salary_range: $150,000 - $200,000
+  current_salary: 120000.00
+  skill_focus: Ruby on Rails, PostgreSQL
+  applied_through: LinkedIn
+  general_notes: Applied through referral
+  final_outcome:
+  contact_name: John Doe
+  contact_email: john@example.com
+  contact_role: Engineering Manager
 
 two:
-  company: MyString
-  position: MyString
-  status: MyString
-  location: MyString
-  salary_range: MyString
-  current_salary: 9.99
-  skill_focus: MyText
-  applied_through: MyString
-  general_notes: MyText
-  final_outcome: MyText
-  contact_name: MyString
-  contact_email: MyString
-  contact_role: MyString
+  company: Shopify
+  position: Full Stack Developer
+  status: in_progress
+  location: Remote
+  salary_range: $130,000 - $170,000
+  current_salary: 110000.00
+  skill_focus: React, Rails
+  applied_through: Company Website
+  general_notes: Second round of interviews
+  final_outcome:
+  contact_name: Jane Smith
+  contact_email: jane@example.com
+  contact_role: Tech Lead

@@ -1,0 +1,11 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @interview_stage %>
+
+<div>
+  <%= link_to "Edit this interview stage", edit_job_application_interview_stage_path(@job_application, @interview_stage) %> |
+  <%= link_to "Back to interview stages", job_application_interview_stages_path(@job_application) %> |
+  <%= link_to "Back to job application", job_application_path(@job_application) %>
+
+  <%= button_to "Destroy this interview stage", job_application_interview_stage_path(@job_application, @interview_stage), method: :delete %>
+</div>

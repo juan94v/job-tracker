@@ -1,0 +1,12 @@
+<% content_for :title, "New interview stage" %>
+
+<h1>New interview stage for <%= @job_application.company %></h1>
+
+<%= render "form", interview_stage: @interview_stage, job_application: @job_application %>
+
+<br>
+
+<div>
+  <%= link_to "Back to interview stages", job_application_interview_stages_path(@job_application) %> |
+  <%= link_to "Back to job application", job_application_path(@job_application) %>
+</div>

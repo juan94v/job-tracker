@@ -1,0 +1,13 @@
+<% content_for :title, "New job application" %>
+
+<div class="container">
+  <div class="page-header">
+    <h1>New Job Application</h1>
+  </div>
+
+  <%= render "form", job_application: @job_application %>
+
+  <div style="margin-top: 20px;">
+    <%= link_to "Back to job applications", job_applications_path, class: "btn btn-secondary" %>
+  </div>
+</div>

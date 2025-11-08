@@ -1,0 +1,38 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @job_application %>
+
+<div style="margin-top: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
+  <h2>Interview Stages</h2>
+
+  <% if @job_application.interview_stages.any? %>
+    <div style="margin: 1rem 0;">
+      <% @job_application.interview_stages.order(:order).each do |stage| %>
+        <div style="padding: 0.5rem; margin: 0.5rem 0; border-left: 3px solid #007bff;">
+          <strong><%= stage.order %>. <%= stage.name %></strong> -
+          <span style="color: <%= stage.passed? ? 'green' : stage.failed? ? 'red' : 'orange' %>">
+            <%= stage.status.titleize %>
+          </span>
+          <% if stage.scheduled_date.present? %>
+            <br><small>Scheduled: <%= stage.scheduled_date.strftime("%B %d, %Y at %I:%M %p") %></small>
+          <% end %>
+          <br>
+          <%= link_to "View", job_application_interview_stage_path(@job_application, stage) %> |
+          <%= link_to "Edit", edit_job_application_interview_stage_path(@job_application, stage) %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p style="color: #666;">No interview stages yet.</p>
+  <% end %>
+
+  <%= link_to "Add Interview Stage", new_job_application_interview_stage_path(@job_application), style: "display: inline-block; margin-top: 1rem; padding: 0.5rem 1rem; background: #007bff; color: white; text-decoration: none; border-radius: 4px;" %> |
+  <%= link_to "View All Stages", job_application_interview_stages_path(@job_application) %>
+</div>
+
+<div style="margin-top: 1rem;">
+  <%= link_to "Edit this job application", edit_job_application_path(@job_application) %> |
+  <%= link_to "Back to job applications", job_applications_path %>
+
+  <%= button_to "Destroy this job application", @job_application, method: :delete %>
+</div>

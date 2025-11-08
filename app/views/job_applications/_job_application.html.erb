@@ -1,0 +1,68 @@
+<div id="<%= dom_id job_application %>" class="job-application">
+  <div class="job-application-header">
+    <h3><%= job_application.position %></h3>
+    <p class="company"><%= job_application.company %></p>
+  </div>
+
+  <% if job_application.status.present? %>
+    <p>
+      <strong>Status:</strong>
+      <span class="status-badge status-<%= job_application.status.downcase.gsub(' ', '-') %>">
+        <%= job_application.status %>
+      </span>
+    </p>
+  <% end %>
+
+  <% if job_application.location.present? %>
+    <p>
+      <strong>Location:</strong>
+      <%= job_application.location %>
+    </p>
+  <% end %>
+
+  <% if job_application.salary_range.present? %>
+    <p>
+      <strong>Salary range:</strong>
+      <%= job_application.salary_range %>
+    </p>
+  <% end %>
+
+  <% if job_application.skill_focus.present? %>
+    <p>
+      <strong>Skill focus:</strong>
+      <%= job_application.skill_focus %>
+    </p>
+  <% end %>
+
+  <% if job_application.applied_through.present? %>
+    <p>
+      <strong>Applied through:</strong>
+      <%= job_application.applied_through %>
+    </p>
+  <% end %>
+
+  <% if job_application.contact_name.present? %>
+    <p>
+      <strong>Contact:</strong>
+      <%= job_application.contact_name %>
+      <% if job_application.contact_role.present? %>
+        (<%= job_application.contact_role %>)
+      <% end %>
+      <% if job_application.contact_email.present? %>
+        - <%= job_application.contact_email %>
+      <% end %>
+    </p>
+  <% end %>
+
+  <% if job_application.general_notes.present? %>
+    <p>
+      <strong>Notes:</strong>
+      <%= job_application.general_notes %>
+    </p>
+  <% end %>
+
+  <div class="actions">
+    <%= link_to "View Details", job_application, class: "btn btn-primary" %>
+    <%= link_to "Edit", edit_job_application_path(job_application), class: "btn btn-secondary" %>
+  </div>
+</div>
