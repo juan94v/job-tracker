@@ -7,53 +7,53 @@ class JobApplicationsTest < ApplicationSystemTestCase
 
   test "visiting the index" do
     visit job_applications_url
-    assert_selector "h1", text: "Job applications"
+    assert_selector "h1", text: "Job Applications"
   end
 
   test "should create job application" do
     visit job_applications_url
     click_on "New job application"
 
-    fill_in "Applied through", with: @job_application.applied_through
-    fill_in "Company", with: @job_application.company
-    fill_in "Contact email", with: @job_application.contact_email
-    fill_in "Contact name", with: @job_application.contact_name
-    fill_in "Contact role", with: @job_application.contact_role
-    fill_in "Current salary", with: @job_application.current_salary
-    fill_in "Final outcome", with: @job_application.final_outcome
-    fill_in "General notes", with: @job_application.general_notes
+    fill_in "Company *", with: "Test Company"
+    fill_in "Position *", with: "Test Position"
     fill_in "Location", with: @job_application.location
-    fill_in "Position", with: @job_application.position
-    fill_in "Salary range", with: @job_application.salary_range
-    fill_in "Skill focus", with: @job_application.skill_focus
+    fill_in "Salary Range", with: @job_application.salary_range
+    fill_in "Current Salary", with: @job_application.current_salary
+    fill_in "Skill Focus", with: @job_application.skill_focus
+    fill_in "Applied Through", with: @job_application.applied_through
+    fill_in "General Notes", with: @job_application.general_notes
+    fill_in "Final Outcome", with: @job_application.final_outcome
+    fill_in "Contact Name", with: @job_application.contact_name
+    fill_in "Contact Email", with: @job_application.contact_email
+    fill_in "Contact Role", with: @job_application.contact_role
     select @job_application.status.titleize, from: "Status"
-    click_on "Create Job application"
+    click_on "Create Job Application"
 
     assert_text "Job application was successfully created"
-    click_on "Back"
+    click_on "Back to job applications"
   end
 
   test "should update Job application" do
     visit job_application_url(@job_application)
-    click_on "Edit this job application", match: :first
+    click_on "Edit", match: :first
 
-    fill_in "Applied through", with: @job_application.applied_through
-    fill_in "Company", with: @job_application.company
-    fill_in "Contact email", with: @job_application.contact_email
-    fill_in "Contact name", with: @job_application.contact_name
-    fill_in "Contact role", with: @job_application.contact_role
-    fill_in "Current salary", with: @job_application.current_salary
-    fill_in "Final outcome", with: @job_application.final_outcome
-    fill_in "General notes", with: @job_application.general_notes
+    fill_in "Company *", with: "Updated Company"
+    fill_in "Position *", with: "Updated Position"
     fill_in "Location", with: @job_application.location
-    fill_in "Position", with: @job_application.position
-    fill_in "Salary range", with: @job_application.salary_range
-    fill_in "Skill focus", with: @job_application.skill_focus
+    fill_in "Salary Range", with: @job_application.salary_range
+    fill_in "Current Salary", with: @job_application.current_salary
+    fill_in "Skill Focus", with: @job_application.skill_focus
+    fill_in "Applied Through", with: @job_application.applied_through
+    fill_in "General Notes", with: @job_application.general_notes
+    fill_in "Final Outcome", with: @job_application.final_outcome
+    fill_in "Contact Name", with: @job_application.contact_name
+    fill_in "Contact Email", with: @job_application.contact_email
+    fill_in "Contact Role", with: @job_application.contact_role
     select @job_application.status.titleize, from: "Status"
-    click_on "Update Job application"
+    click_on "Update Job Application"
 
     assert_text "Job application was successfully updated"
-    click_on "Back"
+    click_on "Back to job applications"
   end
 
   test "should destroy Job application" do
