@@ -1,12 +1,14 @@
 <% content_for :title, "Editing job application" %>
 
-<h1>Editing job application</h1>
+<div class="container">
+  <div class="page-header">
+    <h1>Editing Job Application</h1>
+  </div>
 
-<%= render "form", job_application: @job_application %>
+  <%= render "form", job_application: @job_application %>
 
-<br>
-
-<div>
-  <%= link_to "Show this job application", @job_application %> |
-  <%= link_to "Back to job applications", job_applications_path %>
+  <div class="actions" style="margin-top: 20px;">
+    <%= link_to "View Details", @job_application, class: "btn btn-primary" %>
+    <%= link_to "Back to job applications", job_applications_path, class: "btn btn-secondary" %>
+  </div>
 </div>
