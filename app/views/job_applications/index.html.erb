@@ -1,30 +1,47 @@
 <% content_for :title, "Job applications" %>
 
-<div class="container">
-  <% if notice %>
-    <p class="notice"><%= notice %></p>
-  <% end %>
-
-  <div class="page-header">
-    <h1>Job Applications</h1>
-    <%= link_to "New job application", new_job_application_path, class: "btn btn-success" %>
+<% if notice %>
+  <div role="alert" class="alert alert-success mb-6">
+    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+    <span><%= notice %></span>
   </div>
+<% end %>
 
-  <div class="search-container">
-    <input type="text" id="company-filter" placeholder="Filtrar por compañía..." class="search-input">
-  </div>
-
-  <div id="job_applications" class="card-grid">
-    <% @job_applications.each do |job_application| %>
-      <%= render job_application %>
-    <% end %>
-  </div>
-
-  <% if @job_applications.empty? %>
-    <div class="card" style="text-align: center; padding: 60px 20px;">
-      <h2 style="color: #95a5a6; margin-bottom: 20px;">No job applications yet</h2>
-      <p style="color: #7f8c8d; margin-bottom: 30px;">Start tracking your job applications by creating your first one!</p>
-      <%= link_to "Create your first job application", new_job_application_path, class: "btn btn-primary" %>
-    </div>
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+  <h1 class="text-3xl font-bold">Job Applications</h1>
+  <%= link_to new_job_application_path, class: "btn btn-success" do %>
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+    </svg>
+    New Application
   <% end %>
 </div>
+
+<div class="form-control mb-6">
+  <div class="input-group">
+    <input type="text" id="company-filter" placeholder="Filter by company..." class="input input-bordered w-full max-w-md" />
+  </div>
+</div>
+
+<div id="job_applications" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+  <% @job_applications.each do |job_application| %>
+    <%= render job_application %>
+  <% end %>
+</div>
+
+<% if @job_applications.empty? %>
+  <div class="card bg-base-100 shadow-xl">
+    <div class="card-body items-center text-center py-16">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-base-content/30 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+      </svg>
+      <h2 class="card-title text-2xl text-base-content/50">No job applications yet</h2>
+      <p class="text-base-content/40 mb-4">Start tracking your job applications by creating your first one!</p>
+      <div class="card-actions">
+        <%= link_to "Create your first application", new_job_application_path, class: "btn btn-primary" %>
+      </div>
+    </div>
+  </div>
+<% end %>

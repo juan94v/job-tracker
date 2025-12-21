@@ -1,47 +1,69 @@
-<div id="<%= dom_id interview_stage %>" class="card interview-stage">
-  <div class="job-application-header">
-    <h3><%= interview_stage.name %></h3>
-    <p class="company">Etapa <%= interview_stage.order %></p>
-  </div>
+<div id="<%= dom_id interview_stage %>" class="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300">
+  <div class="card-body">
+    <div class="flex justify-between items-start">
+      <div>
+        <h2 class="card-title text-lg"><%= interview_stage.name %></h2>
+        <p class="text-base-content/70">Stage <%= interview_stage.order %></p>
+      </div>
+      <% if interview_stage.status.present? %>
+        <%
+          badge_class = case interview_stage.status.downcase
+          when 'passed' then 'badge-success'
+          when 'failed' then 'badge-error'
+          when 'scheduled' then 'badge-warning'
+          when 'pending' then 'badge-info'
+          else 'badge-neutral'
+          end
+        %>
+        <div class="badge <%= badge_class %> badge-lg"><%= interview_stage.status.titleize %></div>
+      <% end %>
+    </div>
 
-  <% if interview_stage.status.present? %>
-    <p>
-      <strong>Status:</strong>
-      <span class="status-badge status-<%= interview_stage.status.downcase.gsub(' ', '-') %>">
-        <%= interview_stage.status %>
-      </span>
-    </p>
-  <% end %>
+    <div class="divider my-2"></div>
 
-  <% if interview_stage.scheduled_date %>
-    <p>
-      <strong>Fecha programada:</strong>
-      <%= interview_stage.scheduled_date.strftime("%d/%m/%Y") if interview_stage.scheduled_date.respond_to?(:strftime) %>
-    </p>
-  <% end %>
+    <div class="space-y-2 text-sm">
+      <% if interview_stage.scheduled_date %>
+        <div class="flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-base-content/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+          <span><strong>Scheduled:</strong> <%= interview_stage.scheduled_date.strftime("%B %d, %Y at %I:%M %p") %></span>
+        </div>
+      <% end %>
 
-  <% if interview_stage.completed_date %>
-    <p>
-      <strong>Fecha completada:</strong>
-      <%= interview_stage.completed_date.strftime("%d/%m/%Y") if interview_stage.completed_date.respond_to?(:strftime) %>
-    </p>
-  <% end %>
+      <% if interview_stage.completed_date %>
+        <div class="flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span><strong>Completed:</strong> <%= interview_stage.completed_date.strftime("%B %d, %Y") %></span>
+        </div>
+      <% end %>
 
-  <% if interview_stage.follow_up_date %>
-    <p>
-      <strong>Fecha de seguimiento:</strong>
-      <%= interview_stage.follow_up_date.strftime("%d/%m/%Y") if interview_stage.follow_up_date.respond_to?(:strftime) %>
-    </p>
-  <% end %>
+      <% if interview_stage.follow_up_date %>
+        <div class="flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-warning" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span><strong>Follow-up:</strong> <%= interview_stage.follow_up_date.strftime("%B %d, %Y") %></span>
+        </div>
+      <% end %>
+    </div>
 
-  <% if interview_stage.feedback.present? %>
-    <p>
-      <strong>Feedback:</strong>
-      <%= interview_stage.feedback %>
-    </p>
-  <% end %>
+    <% if interview_stage.feedback.present? %>
+      <div class="mt-3 p-3 bg-base-200 rounded-lg text-sm">
+        <p class="line-clamp-3"><%= interview_stage.feedback %></p>
+      </div>
+    <% end %>
 
-  <div class="actions">
-    <%= link_to "View Details", job_application_interview_stage_path(interview_stage.job_application, interview_stage), class: "btn btn-primary" %>
+    <div class="card-actions justify-end mt-4">
+      <%= link_to job_application_interview_stage_path(interview_stage.job_application, interview_stage), class: "btn btn-primary btn-sm" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+        </svg>
+        View
+      <% end %>
+    </div>
   </div>
 </div>

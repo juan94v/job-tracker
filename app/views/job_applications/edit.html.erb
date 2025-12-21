@@ -1,18 +1,45 @@
-<% content_for :title, "Editing job application" %>
+<% content_for :title, "Editing #{@job_application.position}" %>
 
-<div class="container">
-  <div class="page-header">
-    <h1>Editing Job Application</h1>
-  </div>
+<!-- Breadcrumbs -->
+<div class="text-sm breadcrumbs mb-6">
+  <ul>
+    <li><%= link_to "Applications", job_applications_path %></li>
+    <li><%= link_to @job_application.company, job_application_path(@job_application) %></li>
+    <li>Edit</li>
+  </ul>
+</div>
 
-  <%= render "form", job_application: @job_application %>
+<div class="flex items-center gap-3 mb-6">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+  </svg>
+  <h1 class="text-3xl font-bold">Editing: <%= @job_application.position %></h1>
+</div>
 
-  <div class="actions" style="margin-top: 20px;">
-    <%= link_to "View Details", @job_application, class: "btn btn-primary" %>
-    <% if params[:return_to] == 'show' %>
-      <%= link_to "← Volver a detalles", job_application_path(@job_application), class: "btn btn-secondary" %>
-    <% else %>
-      <%= link_to "← Volver a aplicaciones", job_applications_path, class: "btn btn-secondary" %>
+<%= render "form", job_application: @job_application %>
+
+<div class="flex gap-3 mt-6">
+  <%= link_to @job_application, class: "btn btn-primary btn-outline" do %>
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+    </svg>
+    View Details
+  <% end %>
+
+  <% if params[:return_to] == 'show' %>
+    <%= link_to job_application_path(@job_application), class: "btn btn-ghost" do %>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      Back to Details
     <% end %>
-  </div>
+  <% else %>
+    <%= link_to job_applications_path, class: "btn btn-ghost" do %>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      Back to Applications
+    <% end %>
+  <% end %>
 </div>

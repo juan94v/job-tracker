@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html data-theme="corporate">
   <head>
     <title><%= content_for(:title) || "Job Tracker" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -17,12 +17,31 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%# Tailwind CSS compiled with daisyUI %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <%= yield %>
+  <body class="min-h-screen bg-base-200">
+    <div class="navbar bg-base-100 shadow-lg mb-6">
+      <div class="flex-1">
+        <%= link_to "Job Tracker", job_applications_path, class: "btn btn-ghost text-xl" %>
+      </div>
+      <div class="flex-none">
+        <ul class="menu menu-horizontal px-1">
+          <li><%= link_to "Applications", job_applications_path %></li>
+        </ul>
+      </div>
+    </div>
+
+    <main class="container mx-auto px-4 pb-8">
+      <%= yield %>
+    </main>
+
+    <footer class="footer footer-center p-4 bg-base-300 text-base-content mt-auto">
+      <aside>
+        <p>Job Tracker © <%= Date.current.year %> - Track your job applications with ease</p>
+      </aside>
+    </footer>
   </body>
 </html>

@@ -1,37 +1,141 @@
-<p style="color: green"><%= notice %></p>
+<% content_for :title, "#{@job_application.position} at #{@job_application.company}" %>
 
-<%= render @job_application, show_edit_button: false %>
+<% if notice %>
+  <div role="alert" class="alert alert-success mb-6">
+    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+    <span><%= notice %></span>
+  </div>
+<% end %>
 
-<div style="margin-top: 2rem; padding: 1rem; border: 1px solid #ddd; border-radius: 4px;">
-  <h2>Interview Stages</h2>
-
-  <% if @job_application.interview_stages.any? %>
-    <div style="margin: 1rem 0;">
-      <% @job_application.interview_stages.order(:order).each do |stage| %>
-        <div style="padding: 0.5rem; margin: 0.5rem 0; border-left: 3px solid #007bff;">
-          <strong><%= stage.order %>. <%= stage.name %></strong> -
-          <span style="color: <%= stage.passed? ? 'green' : stage.failed? ? 'red' : 'orange' %>">
-            <%= stage.status.titleize %>
-          </span>
-          <% if stage.scheduled_date.present? %>
-            <br><small>Scheduled: <%= stage.scheduled_date.strftime("%B %d, %Y at %I:%M %p") %></small>
-          <% end %>
-          <br>
-          <%= link_to "View", job_application_interview_stage_path(@job_application, stage) %> |
-          <%= link_to "Edit", edit_job_application_interview_stage_path(@job_application, stage) %>
-        </div>
-      <% end %>
-    </div>
-  <% else %>
-    <p style="color: #666;">No interview stages yet.</p>
-  <% end %>
-
-  <%= link_to "Add Interview Stage", new_job_application_interview_stage_path(@job_application), style: "display: inline-block; margin-top: 1rem; padding: 0.5rem 1rem; background: #007bff; color: white; text-decoration: none; border-radius: 4px;" %>
+<!-- Breadcrumbs -->
+<div class="text-sm breadcrumbs mb-6">
+  <ul>
+    <li><%= link_to "Applications", job_applications_path %></li>
+    <li><%= @job_application.company %></li>
+    <li><%= @job_application.position %></li>
+  </ul>
 </div>
 
-<div style="margin-top: 1rem;">
-  <%= link_to "Edit this job application", edit_job_application_path(@job_application, return_to: 'show') %> |
-  <%= link_to "Back to job applications", job_applications_path %>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+  <!-- Main Content -->
+  <div class="lg:col-span-2 space-y-6">
+    <%= render @job_application, show_edit_button: false %>
 
-  <%= button_to "Destroy this job application", @job_application, method: :delete %>
+    <!-- Interview Stages -->
+    <div class="card bg-base-100 shadow-xl">
+      <div class="card-body">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="card-title text-xl">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            Interview Stages
+          </h2>
+          <%= link_to new_job_application_interview_stage_path(@job_application), class: "btn btn-primary btn-sm" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+            Add Stage
+          <% end %>
+        </div>
+
+        <% if @job_application.interview_stages.any? %>
+          <ul class="timeline timeline-vertical">
+            <% @job_application.interview_stages.order(:order).each_with_index do |stage, index| %>
+              <li>
+                <% if index > 0 %><hr class="<%= stage.passed? ? 'bg-success' : stage.failed? ? 'bg-error' : 'bg-base-300' %>"/><% end %>
+                <div class="timeline-start text-sm text-base-content/60">
+                  <% if stage.scheduled_date.present? %>
+                    <%= stage.scheduled_date.strftime("%b %d, %Y") %>
+                  <% end %>
+                </div>
+                <div class="timeline-middle">
+                  <% if stage.passed? %>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  <% elsif stage.failed? %>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-error" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  <% else %>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-warning" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  <% end %>
+                </div>
+                <div class="timeline-end timeline-box">
+                  <div class="flex justify-between items-start gap-4">
+                    <div>
+                      <span class="font-bold"><%= stage.order %>. <%= stage.name %></span>
+                      <div class="badge badge-sm ml-2 <%= stage.passed? ? 'badge-success' : stage.failed? ? 'badge-error' : 'badge-warning' %>">
+                        <%= stage.status.titleize %>
+                      </div>
+                    </div>
+                    <div class="flex gap-1">
+                      <%= link_to job_application_interview_stage_path(@job_application, stage), class: "btn btn-ghost btn-xs" do %>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                      <% end %>
+                      <%= link_to edit_job_application_interview_stage_path(@job_application, stage), class: "btn btn-ghost btn-xs" do %>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                        </svg>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+                <% if index < @job_application.interview_stages.count - 1 %><hr class="<%= stage.passed? ? 'bg-success' : stage.failed? ? 'bg-error' : 'bg-base-300' %>"/><% end %>
+              </li>
+            <% end %>
+          </ul>
+        <% else %>
+          <div class="text-center py-8">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-base-content/30 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            <p class="text-base-content/50">No interview stages yet.</p>
+            <p class="text-sm text-base-content/40 mt-1">Add stages to track your interview progress.</p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sidebar Actions -->
+  <div class="space-y-6">
+    <div class="card bg-base-100 shadow-xl">
+      <div class="card-body">
+        <h3 class="font-bold text-lg mb-4">Actions</h3>
+        <div class="flex flex-col gap-3">
+          <%= link_to edit_job_application_path(@job_application, return_to: 'show'), class: "btn btn-primary" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+            </svg>
+            Edit Application
+          <% end %>
+
+          <%= link_to job_applications_path, class: "btn btn-ghost" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back to Applications
+          <% end %>
+
+          <div class="divider my-2"></div>
+
+          <%= button_to @job_application, method: :delete, class: "btn btn-error btn-outline", data: { turbo_confirm: "Are you sure you want to delete this application?" } do %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+            </svg>
+            Delete Application
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,17 +1,36 @@
 <% content_for :title, "New interview stage" %>
 
-<div class="container">
-  <div class="page-header">
-    <h1>Nueva Etapa de Entrevista</h1>
-  </div>
+<!-- Breadcrumbs -->
+<div class="text-sm breadcrumbs mb-6">
+  <ul>
+    <li><%= link_to "Applications", job_applications_path %></li>
+    <li><%= link_to @job_application.company, job_application_path(@job_application) %></li>
+    <li>New Stage</li>
+  </ul>
+</div>
 
-  <div class="job-context-banner">
-    <p><strong><%= @job_application.company %></strong> - <%= @job_application.position %></p>
-  </div>
+<div class="flex items-center gap-3 mb-6">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+  </svg>
+  <h1 class="text-3xl font-bold">New Interview Stage</h1>
+</div>
 
-  <%= render "form", interview_stage: @interview_stage, job_application: @job_application %>
+<!-- Job Context Banner -->
+<div class="alert mb-6">
+  <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+  </svg>
+  <span><strong><%= @job_application.company %></strong> - <%= @job_application.position %></span>
+</div>
 
-  <div style="margin-top: 20px;">
-    <%= link_to "← Volver a la aplicación", job_application_path(@job_application), class: "btn btn-secondary" %>
-  </div>
+<%= render "form", interview_stage: @interview_stage, job_application: @job_application %>
+
+<div class="mt-6">
+  <%= link_to job_application_path(@job_application), class: "btn btn-ghost" do %>
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+    </svg>
+    Back to Application
+  <% end %>
 </div>
