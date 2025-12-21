@@ -1,107 +1,145 @@
-<%= form_with(model: job_application, class: "job-application-form") do |form| %>
+<%= form_with(model: job_application, class: "space-y-6") do |form| %>
   <%= hidden_field_tag :return_to, params[:return_to] %>
 
   <% if job_application.errors.any? %>
-    <div class="alert">
-      <h3 style="margin-bottom: 10px;"><%= pluralize(job_application.errors.count, "error") %> prohibited this job application from being saved:</h3>
-      <ul style="margin-left: 20px;">
-        <% job_application.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+    <div role="alert" class="alert alert-error">
+      <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <div>
+        <h3 class="font-bold"><%= pluralize(job_application.errors.count, "error") %> prohibited this job application from being saved:</h3>
+        <ul class="list-disc list-inside mt-2">
+          <% job_application.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
     </div>
   <% end %>
 
-  <div class="card">
-    <h2 style="margin-bottom: 20px; border-bottom: 2px solid #3498db; padding-bottom: 10px;">Basic Information</h2>
+  <!-- Basic Information -->
+  <div class="card bg-base-100 shadow-xl">
+    <div class="card-body">
+      <h2 class="card-title text-xl border-b border-primary pb-2 mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        Basic Information
+      </h2>
 
-    <div class="form-row">
-      <div class="form-group">
-        <%= form.label :company, "Company *" %>
-        <%= form.text_field :company, placeholder: "e.g., Google, Meta, Startup Inc.", required: true %>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="form-control w-full">
+          <%= form.label :company, "Company *", class: "label" %>
+          <%= form.text_field :company, placeholder: "e.g., Google, Meta, Startup Inc.", required: true, class: "input input-bordered w-full" %>
+        </div>
+
+        <div class="form-control w-full">
+          <%= form.label :position, "Position *", class: "label" %>
+          <%= form.text_field :position, placeholder: "e.g., Senior Software Engineer", required: true, class: "input input-bordered w-full" %>
+        </div>
       </div>
 
-      <div class="form-group">
-        <%= form.label :position, "Position *" %>
-        <%= form.text_field :position, placeholder: "e.g., Senior Software Engineer", required: true %>
-      </div>
-    </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="form-control w-full">
+          <%= form.label :status, "Status", class: "label" %>
+          <%= form.select :status, JobApplication.statuses.keys.map { |s| [s.titleize, s] }, { prompt: "Select status" }, { class: "select select-bordered w-full" } %>
+        </div>
 
-    <div class="form-row">
-      <div class="form-group">
-        <%= form.label :status, "Status" %>
-        <%= form.select :status, JobApplication.statuses.keys.map { |s| [s.titleize, s] }, { prompt: "Select status" }, { class: "form-select" } %>
-      </div>
-
-      <div class="form-group">
-        <%= form.label :location, "Location" %>
-        <%= form.text_field :location, placeholder: "e.g., Remote, New York, NY" %>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <h2 style="margin-bottom: 20px; border-bottom: 2px solid #3498db; padding-bottom: 10px;">Compensation</h2>
-
-    <div class="form-row">
-      <div class="form-group">
-        <%= form.label :salary_range, "Salary Range" %>
-        <%= form.text_field :salary_range, placeholder: "e.g., $80,000 - $100,000" %>
-      </div>
-
-      <div class="form-group">
-        <%= form.label :current_salary, "Current Salary" %>
-        <%= form.number_field :current_salary, step: 0.01, placeholder: "e.g., 75000" %>
+        <div class="form-control w-full">
+          <%= form.label :location, "Location", class: "label" %>
+          <%= form.text_field :location, placeholder: "e.g., Remote, New York, NY", class: "input input-bordered w-full" %>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="card">
-    <h2 style="margin-bottom: 20px; border-bottom: 2px solid #3498db; padding-bottom: 10px;">Application Details</h2>
+  <!-- Compensation -->
+  <div class="card bg-base-100 shadow-xl">
+    <div class="card-body">
+      <h2 class="card-title text-xl border-b border-primary pb-2 mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        Compensation
+      </h2>
 
-    <div class="form-group">
-      <%= form.label :skill_focus, "Skill Focus" %>
-      <%= form.text_area :skill_focus, rows: 3, placeholder: "e.g., React, Node.js, AWS, Microservices..." %>
-    </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="form-control w-full">
+          <%= form.label :salary_range, "Salary Range", class: "label" %>
+          <%= form.text_field :salary_range, placeholder: "e.g., $80,000 - $100,000", class: "input input-bordered w-full" %>
+        </div>
 
-    <div class="form-group">
-      <%= form.label :applied_through, "Applied Through" %>
-      <%= form.text_field :applied_through, placeholder: "e.g., LinkedIn, Company website, Referral" %>
-    </div>
-
-    <div class="form-group">
-      <%= form.label :general_notes, "General Notes" %>
-      <%= form.text_area :general_notes, rows: 4, placeholder: "Any additional information about this application..." %>
-    </div>
-
-    <div class="form-group">
-      <%= form.label :final_outcome, "Final Outcome" %>
-      <%= form.text_area :final_outcome, rows: 3, placeholder: "Final result of the application process (if completed)..." %>
-    </div>
-  </div>
-
-  <div class="card">
-    <h2 style="margin-bottom: 20px; border-bottom: 2px solid #3498db; padding-bottom: 10px;">Contact Information</h2>
-
-    <div class="form-group">
-      <%= form.label :contact_name, "Contact Name" %>
-      <%= form.text_field :contact_name, placeholder: "e.g., Jane Smith" %>
-    </div>
-
-    <div class="form-row">
-      <div class="form-group">
-        <%= form.label :contact_email, "Contact Email" %>
-        <%= form.text_field :contact_email, type: "email", placeholder: "e.g., jane.smith@company.com" %>
-      </div>
-
-      <div class="form-group">
-        <%= form.label :contact_role, "Contact Role" %>
-        <%= form.text_field :contact_role, placeholder: "e.g., Hiring Manager, Recruiter" %>
+        <div class="form-control w-full">
+          <%= form.label :current_salary, "Current Salary", class: "label" %>
+          <%= form.number_field :current_salary, step: 0.01, placeholder: "e.g., 75000", class: "input input-bordered w-full" %>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="form-actions">
-    <%= form.submit job_application.new_record? ? "Create Job Application" : "Update Job Application", class: "btn btn-primary" %>
+  <!-- Application Details -->
+  <div class="card bg-base-100 shadow-xl">
+    <div class="card-body">
+      <h2 class="card-title text-xl border-b border-primary pb-2 mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+        Application Details
+      </h2>
+
+      <div class="form-control w-full">
+        <%= form.label :skill_focus, "Skill Focus", class: "label" %>
+        <%= form.text_area :skill_focus, rows: 3, placeholder: "e.g., React, Node.js, AWS, Microservices...", class: "textarea textarea-bordered w-full" %>
+      </div>
+
+      <div class="form-control w-full">
+        <%= form.label :applied_through, "Applied Through", class: "label" %>
+        <%= form.text_field :applied_through, placeholder: "e.g., LinkedIn, Company website, Referral", class: "input input-bordered w-full" %>
+      </div>
+
+      <div class="form-control w-full">
+        <%= form.label :general_notes, "General Notes", class: "label" %>
+        <%= form.text_area :general_notes, rows: 4, placeholder: "Any additional information about this application...", class: "textarea textarea-bordered w-full" %>
+      </div>
+
+      <div class="form-control w-full">
+        <%= form.label :final_outcome, "Final Outcome", class: "label" %>
+        <%= form.text_area :final_outcome, rows: 3, placeholder: "Final result of the application process (if completed)...", class: "textarea textarea-bordered w-full" %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact Information -->
+  <div class="card bg-base-100 shadow-xl">
+    <div class="card-body">
+      <h2 class="card-title text-xl border-b border-primary pb-2 mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+        </svg>
+        Contact Information
+      </h2>
+
+      <div class="form-control w-full">
+        <%= form.label :contact_name, "Contact Name", class: "label" %>
+        <%= form.text_field :contact_name, placeholder: "e.g., Jane Smith", class: "input input-bordered w-full" %>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="form-control w-full">
+          <%= form.label :contact_email, "Contact Email", class: "label" %>
+          <%= form.text_field :contact_email, type: "email", placeholder: "e.g., jane.smith@company.com", class: "input input-bordered w-full" %>
+        </div>
+
+        <div class="form-control w-full">
+          <%= form.label :contact_role, "Contact Role", class: "label" %>
+          <%= form.text_field :contact_role, placeholder: "e.g., Hiring Manager, Recruiter", class: "input input-bordered w-full" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Submit Button -->
+  <div class="flex justify-end">
+    <%= form.submit job_application.new_record? ? "Create Job Application" : "Update Job Application", class: "btn btn-primary btn-lg" %>
   </div>
 <% end %>

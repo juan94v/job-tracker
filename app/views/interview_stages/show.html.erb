@@ -1,11 +1,66 @@
-<p style="color: green"><%= notice %></p>
+<% content_for :title, "#{@interview_stage.name} - #{@job_application.company}" %>
 
-<%= render @interview_stage %>
+<% if notice %>
+  <div role="alert" class="alert alert-success mb-6">
+    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+    <span><%= notice %></span>
+  </div>
+<% end %>
 
-<div>
-  <%= link_to "Edit this interview stage", edit_job_application_interview_stage_path(@job_application, @interview_stage) %> |
-  <%= link_to "Back to interview stages", job_application_interview_stages_path(@job_application) %> |
-  <%= link_to "Back to job application", job_application_path(@job_application) %>
+<!-- Breadcrumbs -->
+<div class="text-sm breadcrumbs mb-6">
+  <ul>
+    <li><%= link_to "Applications", job_applications_path %></li>
+    <li><%= link_to @job_application.company, job_application_path(@job_application) %></li>
+    <li><%= @interview_stage.name %></li>
+  </ul>
+</div>
 
-  <%= button_to "Destroy this interview stage", job_application_interview_stage_path(@job_application, @interview_stage), method: :delete %>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+  <!-- Main Content -->
+  <div class="lg:col-span-2">
+    <%= render @interview_stage %>
+  </div>
+
+  <!-- Sidebar Actions -->
+  <div class="space-y-6">
+    <div class="card bg-base-100 shadow-xl">
+      <div class="card-body">
+        <h3 class="font-bold text-lg mb-4">Actions</h3>
+        <div class="flex flex-col gap-3">
+          <%= link_to edit_job_application_interview_stage_path(@job_application, @interview_stage), class: "btn btn-primary" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+            </svg>
+            Edit Stage
+          <% end %>
+
+          <%= link_to job_application_interview_stages_path(@job_application), class: "btn btn-ghost" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+            </svg>
+            All Stages
+          <% end %>
+
+          <%= link_to job_application_path(@job_application), class: "btn btn-ghost" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back to Application
+          <% end %>
+
+          <div class="divider my-2"></div>
+
+          <%= button_to job_application_interview_stage_path(@job_application, @interview_stage), method: :delete, class: "btn btn-error btn-outline", data: { turbo_confirm: "Are you sure you want to delete this stage?" } do %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+            </svg>
+            Delete Stage
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

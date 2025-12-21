@@ -1,67 +1,97 @@
-<%= form_with(model: [@job_application, interview_stage], class: "job-application-form") do |form| %>
+<%= form_with(model: [@job_application, interview_stage], class: "space-y-6") do |form| %>
   <% if interview_stage.errors.any? %>
-    <div class="alert">
-      <h3 style="margin-bottom: 10px;"><%= pluralize(interview_stage.errors.count, "error") %> impidieron guardar esta etapa:</h3>
-      <ul style="margin-left: 20px;">
-        <% interview_stage.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+    <div role="alert" class="alert alert-error">
+      <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <div>
+        <h3 class="font-bold"><%= pluralize(interview_stage.errors.count, "error") %> prevented this stage from being saved:</h3>
+        <ul class="list-disc list-inside mt-2">
+          <% interview_stage.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
     </div>
   <% end %>
 
-  <div class="card">
-    <h2 style="margin-bottom: 20px; border-bottom: 2px solid #3498db; padding-bottom: 10px;">Información Básica</h2>
+  <!-- Basic Information -->
+  <div class="card bg-base-100 shadow-xl">
+    <div class="card-body">
+      <h2 class="card-title text-xl border-b border-primary pb-2 mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        Basic Information
+      </h2>
 
-    <div class="form-row">
-      <div class="form-group">
-        <%= form.label :name, "Nombre de la etapa *" %>
-        <%= form.text_field :name, placeholder: "ej., Entrevista técnica, Primera ronda, Final...", required: true %>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="form-control w-full">
+          <%= form.label :name, "Stage Name *", class: "label" %>
+          <%= form.text_field :name, placeholder: "e.g., Technical Interview, First Round, Final...", required: true, class: "input input-bordered w-full" %>
+        </div>
+
+        <div class="form-control w-full">
+          <%= form.label :order, "Order", class: "label" %>
+          <%= form.number_field :order, placeholder: "e.g., 1, 2, 3...", class: "input input-bordered w-full" %>
+        </div>
       </div>
 
-      <div class="form-group">
-        <%= form.label :order, "Orden" %>
-        <%= form.number_field :order, placeholder: "ej., 1, 2, 3..." %>
+      <div class="form-control w-full">
+        <%= form.label :status, "Status", class: "label" %>
+        <%= form.select :status, InterviewStage.statuses.keys.map { |s| [s.titleize, s] }, { prompt: "Select status" }, { class: "select select-bordered w-full" } %>
       </div>
-    </div>
-
-    <div class="form-group">
-      <%= form.label :status, "Estado" %>
-      <%= form.select :status, InterviewStage.statuses.keys.map { |s| [s.titleize, s] }, { prompt: "Seleccionar estado" }, { class: "form-select" } %>
     </div>
   </div>
 
-  <div class="card">
-    <h2 style="margin-bottom: 20px; border-bottom: 2px solid #3498db; padding-bottom: 10px;">Fechas</h2>
+  <!-- Dates -->
+  <div class="card bg-base-100 shadow-xl">
+    <div class="card-body">
+      <h2 class="card-title text-xl border-b border-primary pb-2 mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+        Dates
+      </h2>
 
-    <div class="form-row">
-      <div class="form-group">
-        <%= form.label :scheduled_date, "Fecha programada" %>
-        <%= form.datetime_field :scheduled_date %>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="form-control w-full">
+          <%= form.label :scheduled_date, "Scheduled Date", class: "label" %>
+          <%= form.datetime_local_field :scheduled_date, class: "input input-bordered w-full" %>
+        </div>
+
+        <div class="form-control w-full">
+          <%= form.label :completed_date, "Completed Date", class: "label" %>
+          <%= form.datetime_local_field :completed_date, class: "input input-bordered w-full" %>
+        </div>
       </div>
 
-      <div class="form-group">
-        <%= form.label :completed_date, "Fecha completada" %>
-        <%= form.datetime_field :completed_date %>
+      <div class="form-control w-full">
+        <%= form.label :follow_up_date, "Follow-up Date", class: "label" %>
+        <%= form.date_field :follow_up_date, class: "input input-bordered w-full" %>
       </div>
-    </div>
-
-    <div class="form-group">
-      <%= form.label :follow_up_date, "Fecha de seguimiento" %>
-      <%= form.date_field :follow_up_date %>
     </div>
   </div>
 
-  <div class="card">
-    <h2 style="margin-bottom: 20px; border-bottom: 2px solid #3498db; padding-bottom: 10px;">Notas y Feedback</h2>
+  <!-- Notes & Feedback -->
+  <div class="card bg-base-100 shadow-xl">
+    <div class="card-body">
+      <h2 class="card-title text-xl border-b border-primary pb-2 mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+        </svg>
+        Notes & Feedback
+      </h2>
 
-    <div class="form-group">
-      <%= form.label :feedback, "Feedback" %>
-      <%= form.text_area :feedback, rows: 5, placeholder: "Notas sobre cómo fue la entrevista, preguntas realizadas, impresiones..." %>
+      <div class="form-control w-full">
+        <%= form.label :feedback, "Feedback", class: "label" %>
+        <%= form.text_area :feedback, rows: 5, placeholder: "Notes about how the interview went, questions asked, impressions...", class: "textarea textarea-bordered w-full" %>
+      </div>
     </div>
   </div>
 
-  <div class="form-actions">
-    <%= form.submit interview_stage.new_record? ? "Crear Etapa" : "Actualizar Etapa", class: "btn btn-primary" %>
+  <!-- Submit Button -->
+  <div class="flex justify-end">
+    <%= form.submit interview_stage.new_record? ? "Create Stage" : "Update Stage", class: "btn btn-primary btn-lg" %>
   </div>
 <% end %>

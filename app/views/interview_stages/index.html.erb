@@ -1,34 +1,67 @@
 <% content_for :title, "Interview stages for #{@job_application.company} - #{@job_application.position}" %>
 
-<div class="container">
-  <% if notice %>
-    <p class="notice"><%= notice %></p>
+<% if notice %>
+  <div role="alert" class="alert alert-success mb-6">
+    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+    <span><%= notice %></span>
+  </div>
+<% end %>
+
+<!-- Breadcrumbs -->
+<div class="text-sm breadcrumbs mb-6">
+  <ul>
+    <li><%= link_to "Applications", job_applications_path %></li>
+    <li><%= link_to @job_application.company, job_application_path(@job_application) %></li>
+    <li>Interview Stages</li>
+  </ul>
+</div>
+
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+  <h1 class="text-3xl font-bold">Interview Stages</h1>
+  <%= link_to new_job_application_interview_stage_path(@job_application), class: "btn btn-success" do %>
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+    </svg>
+    New Stage
   <% end %>
+</div>
 
-  <div class="page-header">
-    <h1>Interview Stages</h1>
-    <%= link_to "Nueva etapa", new_job_application_interview_stage_path(@job_application), class: "btn btn-success" %>
-  </div>
+<!-- Job Context Banner -->
+<div class="alert mb-6">
+  <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+  </svg>
+  <span><strong><%= @job_application.company %></strong> - <%= @job_application.position %></span>
+</div>
 
-  <div class="job-context-banner">
-    <p><strong><%= @job_application.company %></strong> - <%= @job_application.position %></p>
-  </div>
+<div id="interview_stages" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+  <% @interview_stages.each do |interview_stage| %>
+    <%= render interview_stage %>
+  <% end %>
+</div>
 
-  <div id="interview_stages" class="card-grid">
-    <% @interview_stages.each do |interview_stage| %>
-      <%= render interview_stage %>
-    <% end %>
-  </div>
-
-  <% if @interview_stages.empty? %>
-    <div class="card" style="text-align: center; padding: 60px 20px;">
-      <h2 style="color: #95a5a6; margin-bottom: 20px;">No hay etapas de entrevista aún</h2>
-      <p style="color: #7f8c8d; margin-bottom: 30px;">Comienza a organizar tu proceso de entrevistas creando la primera etapa</p>
-      <%= link_to "Crear primera etapa", new_job_application_interview_stage_path(@job_application), class: "btn btn-primary" %>
+<% if @interview_stages.empty? %>
+  <div class="card bg-base-100 shadow-xl">
+    <div class="card-body items-center text-center py-16">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-base-content/30 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+      </svg>
+      <h2 class="card-title text-2xl text-base-content/50">No interview stages yet</h2>
+      <p class="text-base-content/40 mb-4">Start organizing your interview process by creating the first stage!</p>
+      <div class="card-actions">
+        <%= link_to "Create first stage", new_job_application_interview_stage_path(@job_application), class: "btn btn-primary" %>
+      </div>
     </div>
-  <% end %>
-
-  <div style="margin-top: 20px;">
-    <%= link_to "← Volver a la aplicación", job_application_path(@job_application), class: "btn btn-secondary" %>
   </div>
+<% end %>
+
+<div class="mt-6">
+  <%= link_to job_application_path(@job_application), class: "btn btn-ghost" do %>
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+    </svg>
+    Back to Application
+  <% end %>
 </div>
