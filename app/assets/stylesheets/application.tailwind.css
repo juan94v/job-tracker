@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @plugin "daisyui" {
-  themes: light --default, dark, corporate, night;
+  themes: [light], dark, corporate, night;
 }
 
 /* Custom base styles */
