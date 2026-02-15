@@ -28,9 +28,36 @@
         <%= link_to "Job Tracker", job_applications_path, class: "btn btn-ghost text-xl" %>
       </div>
       <div class="flex-none flex items-center gap-2">
-        <ul class="menu menu-horizontal px-1">
-          <li><%= link_to "Applications", job_applications_path %></li>
-        </ul>
+        <% if user_signed_in? %>
+          <ul class="menu menu-horizontal px-1">
+            <li><%= link_to "Applications", job_applications_path %></li>
+          </ul>
+          
+          <!-- User Dropdown -->
+          <div class="dropdown dropdown-end">
+            <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar placeholder">
+              <div class="bg-primary text-primary-content rounded-full w-10">
+                <span class="text-sm"><%= current_user.email.first.upcase %></span>
+              </div>
+            </div>
+            <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+              <li class="menu-title"><span><%= current_user.email %></span></li>
+              <li>
+                <%= link_to destroy_user_session_path, data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to log out?" }, class: "flex items-center gap-2" do %>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                  </svg>
+                  Logout
+                <% end %>
+              </li>
+            </ul>
+          </div>
+        <% else %>
+          <ul class="menu menu-horizontal px-1">
+            <li><%= link_to "Login", new_user_session_path %></li>
+            <li><%= link_to "Register", new_user_registration_path %></li>
+          </ul>
+        <% end %>
         
         <!-- Theme Toggle -->
         <label class="swap swap-rotate btn btn-ghost btn-circle">

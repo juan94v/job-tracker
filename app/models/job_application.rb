@@ -1,4 +1,5 @@
 class JobApplication < ApplicationRecord
+  belongs_to :user, optional: true  # optional for now, existing records may not have user
   has_many :interview_stages, dependent: :destroy
 
   enum :status, {
