@@ -92,4 +92,16 @@ class JobApplicationsControllerTest < ActionDispatch::IntegrationTest
     get job_application_url(other_job_app)
     assert_response :not_found
   end
+
+  test "index should only show current users job applications" do
+    get job_applications_url
+    assert_response :success
+
+    # Should see user one's job application
+    assert_match @job_application.company, response.body
+
+    # Should NOT see user two's job application
+    other_job_app = job_applications(:two)
+    assert_no_match other_job_app.company, response.body
+  end
 end
