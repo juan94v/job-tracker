@@ -39,7 +39,7 @@ class JobApplicationsController < ApplicationController
     respond_to do |format|
       if @job_application.update(job_application_params)
         # Determine where to redirect based on return_to parameter
-        if params[:return_to] == 'show'
+        if params[:return_to] == "show"
           redirect_path = job_application_path(@job_application)
         else
           redirect_path = job_applications_path
