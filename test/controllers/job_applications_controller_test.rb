@@ -1,8 +1,12 @@
 require "test_helper"
 
 class JobApplicationsControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+
   setup do
+    @user = users(:one)
     @job_application = job_applications(:one)
+    sign_in @user
   end
 
   test "should get index" do
@@ -17,7 +21,21 @@ class JobApplicationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create job_application" do
     assert_difference("JobApplication.count") do
-      post job_applications_url, params: { job_application: { applied_through: @job_application.applied_through, company: @job_application.company, contact_email: @job_application.contact_email, contact_name: @job_application.contact_name, contact_role: @job_application.contact_role, current_salary: @job_application.current_salary, final_outcome: @job_application.final_outcome, general_notes: @job_application.general_notes, location: @job_application.location, position: @job_application.position, salary_range: @job_application.salary_range, skill_focus: @job_application.skill_focus, status: @job_application.status } }
+      post job_applications_url, params: { job_application: {
+        applied_through: @job_application.applied_through,
+        company: "New Company",
+        contact_email: @job_application.contact_email,
+        contact_name: @job_application.contact_name,
+        contact_role: @job_application.contact_role,
+        current_salary: @job_application.current_salary,
+        final_outcome: @job_application.final_outcome,
+        general_notes: @job_application.general_notes,
+        location: @job_application.location,
+        position: "New Position",
+        salary_range: @job_application.salary_range,
+        skill_focus: @job_application.skill_focus,
+        status: @job_application.status
+      } }
     end
 
     assert_redirected_to job_application_url(JobApplication.last)
@@ -34,7 +52,21 @@ class JobApplicationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update job_application" do
-    patch job_application_url(@job_application), params: { job_application: { applied_through: @job_application.applied_through, company: @job_application.company, contact_email: @job_application.contact_email, contact_name: @job_application.contact_name, contact_role: @job_application.contact_role, current_salary: @job_application.current_salary, final_outcome: @job_application.final_outcome, general_notes: @job_application.general_notes, location: @job_application.location, position: @job_application.position, salary_range: @job_application.salary_range, skill_focus: @job_application.skill_focus, status: @job_application.status } }
+    patch job_application_url(@job_application), params: { job_application: {
+      applied_through: @job_application.applied_through,
+      company: @job_application.company,
+      contact_email: @job_application.contact_email,
+      contact_name: @job_application.contact_name,
+      contact_role: @job_application.contact_role,
+      current_salary: @job_application.current_salary,
+      final_outcome: @job_application.final_outcome,
+      general_notes: @job_application.general_notes,
+      location: @job_application.location,
+      position: @job_application.position,
+      salary_range: @job_application.salary_range,
+      skill_focus: @job_application.skill_focus,
+      status: @job_application.status
+    } }
     assert_response :see_other
     assert_redirected_to job_applications_url
   end
@@ -45,5 +77,31 @@ class JobApplicationsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to job_applications_url
+  end
+
+  test "should redirect to login when not authenticated" do
+    sign_out @user
+    get job_applications_url
+    assert_redirected_to new_user_session_url
+  end
+
+  test "should not show other users job applications" do
+    other_job_app = job_applications(:two)
+
+    # User one should not be able to access user two's job application
+    get job_application_url(other_job_app)
+    assert_response :not_found
+  end
+
+  test "index should only show current users job applications" do
+    get job_applications_url
+    assert_response :success
+
+    # Should see user one's job application
+    assert_match @job_application.company, response.body
+
+    # Should NOT see user two's job application
+    other_job_app = job_applications(:two)
+    assert_no_match other_job_app.company, response.body
   end
 end

@@ -1,8 +1,16 @@
 require "application_system_test_case"
 
 class JobApplicationsTest < ApplicationSystemTestCase
+  include Warden::Test::Helpers
+
   setup do
+    @user = users(:one)
     @job_application = job_applications(:one)
+    login_as @user, scope: :user
+  end
+
+  teardown do
+    Warden.test_reset!
   end
 
   test "visiting the index" do

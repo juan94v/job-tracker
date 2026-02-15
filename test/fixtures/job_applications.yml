@@ -14,6 +14,7 @@ one:
   contact_name: John Doe
   contact_email: john@example.com
   contact_role: Engineering Manager
+  user: one
 
 two:
   company: Shopify
@@ -29,3 +30,4 @@ two:
   contact_name: Jane Smith
   contact_email: jane@example.com
   contact_role: Tech Lead
+  user: two

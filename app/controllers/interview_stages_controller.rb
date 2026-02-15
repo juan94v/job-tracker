@@ -62,9 +62,9 @@ class InterviewStagesController < ApplicationController
   end
 
   private
-    # Find the parent job application
+    # Find the parent job application (only from current user's applications)
     def set_job_application
-      @job_application = JobApplication.find(params.expect(:job_application_id))
+      @job_application = current_user.job_applications.find(params.expect(:job_application_id))
     end
 
     # Use callbacks to share common setup or constraints between actions.
