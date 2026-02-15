@@ -12,7 +12,7 @@ class JobApplicationsTest < ApplicationSystemTestCase
 
   test "should create job application" do
     visit job_applications_url
-    click_on "New job application"
+    click_on "New Application"
 
     fill_in "Company *", with: "Test Company"
     fill_in "Position *", with: "Test Position"
@@ -30,12 +30,12 @@ class JobApplicationsTest < ApplicationSystemTestCase
     click_on "Create Job Application"
 
     assert_text "Job application was successfully created"
-    click_on "Back to job applications"
+    click_on "Back to Applications"
   end
 
   test "should update Job application" do
     visit job_application_url(@job_application)
-    click_on "Edit", match: :first
+    click_on "Edit Application"
 
     fill_in "Company *", with: "Updated Company"
     fill_in "Position *", with: "Updated Position"
@@ -53,12 +53,13 @@ class JobApplicationsTest < ApplicationSystemTestCase
     click_on "Update Job Application"
 
     assert_text "Job application was successfully updated"
-    click_on "Back to job applications"
   end
 
   test "should destroy Job application" do
     visit job_application_url(@job_application)
-    click_on "Destroy this job application", match: :first
+    accept_confirm do
+      click_on "Delete Application"
+    end
 
     assert_text "Job application was successfully destroyed"
   end
