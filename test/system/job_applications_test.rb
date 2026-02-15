@@ -1,17 +1,16 @@
 require "application_system_test_case"
 
 class JobApplicationsTest < ApplicationSystemTestCase
+  include Warden::Test::Helpers
+
   setup do
     @user = users(:one)
     @job_application = job_applications(:one)
-    login_as(@user)
+    login_as @user, scope: :user
   end
 
-  def login_as(user)
-    visit new_user_session_url
-    fill_in "Email", with: user.email
-    fill_in "Password", with: "password123"
-    click_on "Log in"
+  teardown do
+    Warden.test_reset!
   end
 
   test "visiting the index" do
